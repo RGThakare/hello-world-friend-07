@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Timer, Shield, Target, TrendingUp, Play, Pause, Settings } from "lucide-react";
+import { Timer, Shield, Target, TrendingUp, Play, Pause, Settings, Smartphone } from "lucide-react";
 import zenHero from "@/assets/zen-hero.jpg";
 import FocusTimer from "@/components/FocusTimer";
 import StatsOverview from "@/components/StatsOverview";
@@ -27,8 +27,8 @@ const Index = () => {
         <div className="relative container mx-auto px-4 py-16 text-center">
           <div className="max-w-3xl mx-auto">
             <Badge variant="secondary" className="mb-4 animate-zen-float">
-              <Shield className="mr-2 h-4 w-4" />
-              Digital Wellness Companion
+              <Smartphone className="mr-2 h-4 w-4" />
+              Native Mobile App
             </Badge>
             <h1 className="text-5xl md:text-6xl font-bold mb-6 gradient-zen bg-clip-text text-transparent">
               Focus Zen

@@ -1,0 +1,22 @@
+{
+  "appId": "app.lovable.c07f92edd18142cba233a91af5afa00c",
+  "appName": "Focus Zen",
+  "webDir": "dist",
+  "server": {
+    "url": "https://c07f92ed-d181-42cb-a233-a91af5afa00c.lovableproject.com?forceHideBadge=true",
+    "cleartext": true
+  },
+  "bundledWebRuntime": false,
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "launchAutoHide": true,
+      "backgroundColor": "#9ca3af",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": false,
+      "splashFullScreen": true,
+      "splashImmersive": true
+    }
+  }
+}

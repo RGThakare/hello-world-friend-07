@@ -52,6 +52,12 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				zen: {
+					primary: 'hsl(var(--zen-primary))',
+					secondary: 'hsl(var(--zen-secondary))',
+					accent: 'hsl(var(--zen-accent))',
+					muted: 'hsl(var(--zen-muted))'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

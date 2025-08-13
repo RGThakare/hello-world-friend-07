@@ -15,13 +15,14 @@ import {
 import TaskChallenge from "./TaskChallenge";
 
 interface FocusTimerProps {
+  duration: number; // duration in minutes
   onComplete: () => void;
   onEarlyExit: () => void;
 }
 
-const FocusTimer = ({ onComplete, onEarlyExit }: FocusTimerProps) => {
-  const [timeLeft, setTimeLeft] = useState(25 * 60); // 25 minutes in seconds
-  const [totalTime] = useState(25 * 60);
+const FocusTimer = ({ duration, onComplete, onEarlyExit }: FocusTimerProps) => {
+  const [timeLeft, setTimeLeft] = useState(duration * 60); // duration in seconds
+  const [totalTime] = useState(duration * 60);
   const [isRunning, setIsRunning] = useState(true);
   const [showUnlockOptions, setShowUnlockOptions] = useState(false);
   const [showTaskChallenge, setShowTaskChallenge] = useState(false);

@@ -11,6 +11,7 @@ import TaskChallenge from "@/components/TaskChallenge";
 
 const Index = () => {
   const [isInFocus, setIsInFocus] = useState(false);
+  const [selectedDuration, setSelectedDuration] = useState(25); // in minutes
   const [focusStreakDays, setFocusStreakDays] = useState(7);
   const [totalFocusTime, setTotalFocusTime] = useState(1847); // in minutes
   const [currentSession, setCurrentSession] = useState(0);
@@ -70,6 +71,7 @@ const Index = () => {
       <main className="container mx-auto px-4 py-12 space-y-12">
         {isInFocus ? (
           <FocusTimer 
+            duration={selectedDuration}
             onComplete={() => setIsInFocus(false)}
             onEarlyExit={() => setIsInFocus(false)}
           />
@@ -97,7 +99,10 @@ const Index = () => {
                     <Card 
                       key={option.duration}
                       className="cursor-pointer hover:shadow-zen transition-all duration-300 group"
-                      onClick={() => setIsInFocus(true)}
+                      onClick={() => {
+                        setSelectedDuration(option.duration);
+                        setIsInFocus(true);
+                      }}
                     >
                       <CardContent className="p-6 text-center">
                         <div className="text-3xl font-bold text-zen-primary mb-2 group-hover:scale-110 transition-transform">

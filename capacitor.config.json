@@ -17,6 +17,30 @@
       "showSpinner": false,
       "splashFullScreen": true,
       "splashImmersive": true
+    },
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_icon_config_sample",
+      "iconColor": "#488AFF",
+      "sound": "beep.wav"
+    },
+    "App": {
+      "launchUrl": "focuszen://app"
     }
+  },
+  "android": {
+    "allowMixedContent": true,
+    "permissions": [
+      "android.permission.DEVICE_ADMIN",
+      "android.permission.PACKAGE_USAGE_STATS",
+      "android.permission.SYSTEM_ALERT_WINDOW",
+      "android.permission.BIND_ACCESSIBILITY_SERVICE"
+    ]
+  },
+  "ios": {
+    "contentInset": "automatic",
+    "permissions": [
+      "NSUserTrackingUsageDescription",
+      "NSScreenTimeUsageDescription"
+    ]
   }
 }

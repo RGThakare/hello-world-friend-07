@@ -10,9 +10,13 @@ import {
   DollarSign, 
   Coffee,
   Brain,
-  AlertTriangle 
+  AlertTriangle,
+  Shield,
+  Smartphone 
 } from "lucide-react";
 import TaskChallenge from "./TaskChallenge";
+import AppBlocker from "./AppBlocker";
+import { deviceManager } from "@/utils/deviceManager";
 
 interface FocusTimerProps {
   duration: number; // duration in minutes
@@ -26,6 +30,37 @@ const FocusTimer = ({ duration, onComplete, onEarlyExit }: FocusTimerProps) => {
   const [isRunning, setIsRunning] = useState(true);
   const [showUnlockOptions, setShowUnlockOptions] = useState(false);
   const [showTaskChallenge, setShowTaskChallenge] = useState(false);
+  const [isAppBlockingActive, setIsAppBlockingActive] = useState(false);
+  const [deviceInfo, setDeviceInfo] = useState<any>(null);
+
+  useEffect(() => {
+    // Initialize device manager and start app blocking
+    const initializeBlocking = async () => {
+      try {
+        const info = await deviceManager.getDeviceInfo();
+        setDeviceInfo(info);
+        
+        if (info.platform !== 'web') {
+          const success = await deviceManager.startAppBlocking(
+            ['Instagram', 'TikTok', 'Facebook', 'Twitter', 'YouTube'],
+            duration
+          );
+          setIsAppBlockingActive(success);
+        }
+      } catch (error) {
+        console.error('Failed to initialize app blocking:', error);
+      }
+    };
+
+    initializeBlocking();
+
+    // Cleanup when component unmounts
+    return () => {
+      if (isAppBlockingActive) {
+        deviceManager.stopAppBlocking();
+      }
+    };
+  }, [duration]);
 
   useEffect(() => {
     if (!isRunning) return;
@@ -57,16 +92,24 @@ const FocusTimer = ({ duration, onComplete, onEarlyExit }: FocusTimerProps) => {
     setShowUnlockOptions(true);
   };
 
-  const handleTaskComplete = () => {
+  const handleTaskComplete = async () => {
     setShowTaskChallenge(false);
     setShowUnlockOptions(false);
+    if (isAppBlockingActive) {
+      await deviceManager.stopAppBlocking();
+      setIsAppBlockingActive(false);
+    }
     onEarlyExit();
   };
 
-  const handlePaymentUnlock = () => {
+  const handlePaymentUnlock = async () => {
     // This would integrate with Stripe for payment
     alert("Payment unlock feature coming soon! For now, completing the task challenge is the way to unlock early.");
     setShowUnlockOptions(false);
+    if (isAppBlockingActive) {
+      await deviceManager.stopAppBlocking();
+      setIsAppBlockingActive(false);
+    }
     setIsRunning(true);
   };
 
@@ -84,6 +127,24 @@ const FocusTimer = ({ duration, onComplete, onEarlyExit }: FocusTimerProps) => {
 
   return (
     <div className="max-w-2xl mx-auto space-y-8">
+      {/* App Blocking Status - Mobile Only */}
+      {deviceInfo && deviceInfo.platform !== 'web' && (
+        <AppBlocker 
+          isActive={isAppBlockingActive}
+          timeRemaining={timeLeft}
+          onToggle={(enabled) => {
+            setIsAppBlockingActive(enabled);
+            if (enabled) {
+              deviceManager.startAppBlocking(
+                ['Instagram', 'TikTok', 'Facebook', 'Twitter', 'YouTube'],
+                Math.floor(timeLeft / 60)
+              );
+            } else {
+              deviceManager.stopAppBlocking();
+            }
+          }}
+        />
+      )}
       {/* Main Timer Display */}
       <Card className="shadow-zen gradient-focus border-zen-primary/20">
         <CardContent className="p-12 text-center">
